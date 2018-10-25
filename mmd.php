@@ -42,12 +42,12 @@ $markdownDir  = iconv("UTF-8", "GBK", $path . '/' . $markdownFileName);
 if (!file_exists($markdownDir)) {
     //创建目录
     if (mkdir($markdownDir, 0777, true)) {
-        echo "create file " . $markdownFile . " success\n";
+        echo "create file " . $markdownDir . " success\n";
     } else {
-        die("create file " . $markdownFile . " failed\n");
+        die("create file " . $markdownDir . " failed\n");
     }
 } else {
-    echo "file " . $markdownFile . " is exist\n";
+    echo "file " . $markdownDir . " is exist\n";
 }
 
 //数据库概览
@@ -72,7 +72,7 @@ markdown;
 $result = $mysqli->query("SELECT * FROM information_schema.TABLES WHERE TABLE_SCHEMA = '{$mysql_conf['db']}'");
 while ($overview = $result->fetch_array()) {
     $content .= <<<markdown
-|{$overview['TABLE_NAME']}|{$overview['TABLE_COMMENT']}|{$overview['ENGINE']}|{$overview['ROW_FORMAT']}|{$overview['TABLE_ROWS']}|{$overview['AVG_ROW_LENGTH']}|{$overview['DATA_LENGTH']}|{$overview['MAX_DATA_LENGTH']}|{$overview['INDEX_LENGTH']}|{$overview['DATA_FREE']}|{$overview['AUTO_INCREMENT']}|{$overview['CREATE_TIME']}|{$overview['UPDATE_TIME']}|{$overview['TABLE_COLLATION']}|\n
+| {$overview['TABLE_NAME']} | {$overview['TABLE_COMMENT']} | {$overview['ENGINE']} | {$overview['ROW_FORMAT']} | {$overview['TABLE_ROWS']} | {$overview['AVG_ROW_LENGTH']} | {$overview['DATA_LENGTH']} | {$overview['MAX_DATA_LENGTH']} | {$overview['INDEX_LENGTH']} | {$overview['DATA_FREE']} | {$overview['AUTO_INCREMENT']} | {$overview['CREATE_TIME']} | {$overview['UPDATE_TIME']} | {$overview['TABLE_COLLATION']} |\n
 markdown;
 }
 if (fwrite($file, $content)) {
@@ -110,7 +110,7 @@ markdown;
             $column['COLUMN_DEFAULT'] = "''";
         }
         $content .= <<<markdown
-|{$column['COLUMN_NAME']}|{$column['COLUMN_DEFAULT']}|{$column['IS_NULLABLE']}|{$column['COLUMN_TYPE']}|{$column['COLUMN_KEY']}|{$column['EXTRA']}|{$column['COLUMN_COMMENT']}|\n
+| {$column['COLUMN_NAME']} | {$column['COLUMN_DEFAULT']} | {$column['IS_NULLABLE']} | {$column['COLUMN_TYPE']} | {$column['COLUMN_KEY']} | {$column['EXTRA']} | {$column['COLUMN_COMMENT']} |\n
 markdown;
     }
     //写入文件
